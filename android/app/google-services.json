@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "277423826521",
+    "firebase_url": "https://tathuheo-default-rtdb.firebaseio.com",
+    "project_id": "tathuheo",
+    "storage_bucket": "tathuheo.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:277423826521:android:baf9811bf6ad9c4cd9f348",
+        "android_client_info": {
+          "package_name": "com.appchatkma1"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "277423826521-nj08jpqe6m1npqhhg72anp4i9jl76qpk.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBZkh8nkvgcv6HUWCftIJPkuSZANMvlVLU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "277423826521-nj08jpqe6m1npqhhg72anp4i9jl76qpk.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
