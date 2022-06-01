@@ -10,7 +10,7 @@ import {
   import database from '@react-native-firebase/database';
   import firestore from '@react-native-firebase/firestore';
   import FontAwesome from 'react-native-vector-icons/FontAwesome';
-  import RenderItem from './itemUserChat'
+  import RenderItem from './itemUserChat'   
   import { Dimensions } from 'react-native';
   import moment from 'moment';
   import React, { useEffect, useState } from 'react';
