@@ -13,7 +13,7 @@ import {
   import RenderItem from './itemUserChat'   
   import { Dimensions } from 'react-native';
   import moment from 'moment';
-  import React, { useEffect, useState } from 'react';
+  import React, { useEffect, useState } from 'react';  
   const ListUserChat = ({ route,  navigation }) => {
     const data = route.params.data;
     const [search, setSearch] = React.useState();
