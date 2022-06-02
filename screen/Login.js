@@ -17,8 +17,8 @@ import firestore from '@react-native-firebase/firestore';
 import SimpleToast from 'react-native-simple-toast';
 
 const SignInScreen = ({ navigation }) => {
-    const [email, setEmail] = useState("cuong@gmail.com");
-    const [password, setPassword] = useState('123456');
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState('');
     const [secure, setSecure] = useState(true);
 
 
@@ -42,7 +42,10 @@ const SignInScreen = ({ navigation }) => {
                 console.error(error);
             });
     }
-
+   
+    const updateSecureTextEntry = () => {
+        setSecure(!secure);
+      };
 
     // const onClickPressLogin = async () => {
     //     if (email == '' || password == '') {
@@ -131,7 +134,7 @@ const SignInScreen = ({ navigation }) => {
                         secureTextEntry={secure}
                         onChangeText={val => setPassword(val)}
                     />
-                    <TouchableOpacity >
+                    <TouchableOpacity onPress={updateSecureTextEntry}>
                         {secure ? (
                             <FontAwesome name="eye" style={styles.securystyle} size={20} />
                         ) : (
