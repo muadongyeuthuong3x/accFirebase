@@ -75,7 +75,7 @@ const ItemChat = ({ route, navigation }) => {
                         {
                             item.msgType === 'text' ?
 
-                                <Text style={styles.textChat}>{item.message}</Text> :
+                                <Text style={styles.meChat}>{item.message}</Text> :
                                 <Image
                                     style={styles.imgSendYou}
                                     source={{uri: item.message !=="" ? item.message : undefined }}
@@ -127,7 +127,7 @@ const ItemChat = ({ route, navigation }) => {
 
     React.useEffect(() => {
         const onChildAdd = database()
-            .ref('/messages/' + data.idRoom)
+            .ref('/messages/' + data.idRoom).limitToLast(5)
             .on('child_added', snapshot => {
                 setAllChat((state) => [snapshot.val(), ...state]);
             });
@@ -158,15 +158,12 @@ const ItemChat = ({ route, navigation }) => {
                 console.log("max file")
             } else {
                 urlImagesss = response.assets[0].uri
-                console.log(response.assets[0].uri)
                 const urlName = response.assets[0].uri.substring(response.assets[0].uri.lastIndexOf('/') + 1)
                 nameTime = new Date().getTime() + urlName
                 reference = firebase.storage().ref(nameTime)
 
             }
         })
-        console.log("AAAAA")
-        console.log(urlImagesss)
         await reference.putFile(urlImagesss);
         const refsss = firebase.storage().ref(nameTime);
         console.log(refsss)
@@ -273,7 +270,7 @@ const ItemChat = ({ route, navigation }) => {
                     </TouchableOpacity>
                     <TextInput
                         style={styles.input}
-                        placeholder="messenger ...."
+                        placeholder="Nhập tin nhắn ..."
                         accessible={false}
                         value={message}
                         onChangeText={onChangeTextMessenger}
@@ -301,7 +298,7 @@ export default ItemChat;
 
 const styles = StyleSheet.create({
     arrowleft: {
-        color: "#8BB451",
+        color: "#2982f7",
         paddingTop: 15,
         paddingLeft: 10,
         paddingRight: 10
@@ -315,8 +312,8 @@ const styles = StyleSheet.create({
 
     },
     imgChat: {
-        width: 50,
-        height: 50,
+        width: 45,
+        height: 45,
         borderRadius: 25
     },
     iconAvatar: {
@@ -329,7 +326,7 @@ const styles = StyleSheet.create({
     },
     name: {
         fontWeight: "900",
-        fontSize: 17,
+        fontSize: 19,
         color: 'black'
     },
     timeOnline: {
@@ -357,12 +354,18 @@ const styles = StyleSheet.create({
         justifyContent: 'space-evenly'
     },
     imgSend: {
-        width: 100,
-        height: 100
+        width: 120,
+        height: 120,
+        marginLeft: 10,
+        marginBottom:5,
+        borderRadius:10
     },
     imgSendYou: {
-        width: 100,
-        height: 100,
+        width: 120,
+        height: 120,
+        marginBottom:10,
+        borderRadius:10,
+        marginRight:10
     },
     rightUser: {
         justifyContent: "flex-end",
@@ -372,25 +375,26 @@ const styles = StyleSheet.create({
         paddingHorizontal: 10
     },
     textChat: {
-        fontSize: 20,
+        fontSize: 19,
         fontWeight: "600",
         color: "black",
         backgroundColor: "#E4E6EB",
-        padding: 20,
+        padding: 10,
         borderRadius: 40,
         marginBottom: 10,
-        marginTop: 10,
+        marginLeft: 10,
         maxWidth: 150
     },
     meChat: {
-        fontSize: 20,
+        fontSize: 19,
         fontWeight: "600",
         color: "white",
         backgroundColor: '#2982f7',
         padding: 10,
         borderRadius: 40,
         marginBottom: 10,
-        marginTop: 10
+        marginTop: 10,
+        marginRight:10
     },
     friendChat: {
         maxWidth: 3 * (Dimensions.get('window').width) / 4,
@@ -405,19 +409,19 @@ const styles = StyleSheet.create({
         backgroundColor: "#e9eaeb",
         borderRadius: 50,
         paddingLeft: 20,
-        height: 50,
+        height: 45,
         color: "black",
-        width: (Dimensions.get('window').width) - 80,
+        width: (Dimensions.get('window').width) - 120,
 
     },
     iconSend: {
-        color: "#8BB451",
+        color: "#2982f7",
         marginTop: 2,
         marginLeft: 10,
         padding: 10
     },
     iconImage: {
-        color: "#8BB451",
+        color: "#2982f7",
         marginTop: 10,
         marginRight: 10
     },

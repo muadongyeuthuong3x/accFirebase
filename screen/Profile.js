@@ -10,22 +10,39 @@ import {
 import LinearGradient from 'react-native-linear-gradient';
 import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
 import ImagePicker from 'react-native-image-crop-picker';
-import { utils } from '@react-native-firebase/app';
+import database from '@react-native-firebase/database';
 import { firebase } from '@react-native-firebase/storage';
-import React  from 'react';
+import React from 'react';
 
-const Profile = () => {
+const Profile = ({ route }) => {
     const [urlImage, setImagePicker] = React.useState('')
+    const data = route.params.data;
+    const [urlFirebase, seturlFirebase] = React.useState({
+        name: '',
+        url: '',
+        birday:'',
+        email: '',
+        word: '',
+        uid: ''
+    })
+    React.useEffect(() => {
+        database()
+            .ref(`/users/${data.uid}`)
+            .on('value', snapshot => {
+                const data = snapshot.val()
+                seturlFirebase({
+                    name: data.name,
+                    url: data.avatar,
+                    birday:data.birday,
+                    email: data.email,
+                    word: data.word,
+                    uid: data.uid
+                })
+            });
+        console.log(urlFirebase)
+    }, [data.uid]);
     const [imageSource, setImageSource] = React.useState('')
-    // const storage = getStorage();
     const imageUpload = async () => {
-        // ImagePicker.openCamera({
-        //     width: 300,
-        //     height: 400,
-        //     cropping: true,
-        //   }).then(image => {
-        //     console.log(image);
-        //   });
         let options = {
             mediaType: 'photo',
             quality: 1,
@@ -44,53 +61,51 @@ const Profile = () => {
             } else if (response.assets[0].fileSize > 2097152) {
                 console.log("max file")
             } else {
-                console.log(response)
-                setImagePicker(response.assets[0].uri)
-                // setImageSource(response.assets[0])
+                seturlFirebase({ ...urlFirebase, url: response.assets[0].uri })
             }
         })
     }
 
     const sendProfile = async () => {
-        console.log("AAAA")
-         const urlName = urlImage.substring(urlImage.lastIndexOf('/') + 1)
-        // let reference = storage().ref(urlName);       
-        const reference =  firebase.storage().ref(urlName)
-        let task = await reference.putFile(urlImage);       
-          console.log(task)
-
-        // const imagesRef = ref(storage, 'images');
-       
-       
-        // const uploadUri = Platform.OS === 'ios' ? urlImage.replace('file://', '') : urlImage
-        // const spaceRef = ref(storage, urlName);
-        // const reference =await  storage().ref(urlName).putFile(urlImage);
-        // const metadata = {
-        //     contentType: 'image/jpeg',
-        //   };
-        // uploadBytes(spaceRef , file, metadata);  
-
+        const urlName = (urlFirebase.url).substring((urlFirebase.url).lastIndexOf('/') + 1)
+        nameTime = new Date().getTime() + urlName
+        reference = firebase.storage().ref(nameTime)
+        await reference.putFile(urlFirebase.url);
+        const refsss = firebase.storage().ref(nameTime);
+        const dataImage = await refsss.getDownloadURL()
+        const sendData  = {
+            ...urlFirebase,
+            avatar : dataImage
+        }
+        database()
+            .ref(`/users/${data.uid}`)
+            .set(sendData)
+    }
+    const onChangeName = (e) => {
+        seturlFirebase({ ...urlFirebase, name: e })
     }
     return (
         <View style={styles.container}>
-            <Text style={styles.colorAvatar}>Avatar ca nhan</Text>
+            <Text style={styles.colorAvatar}>Avatar cá nhân </Text>
             <TouchableOpacity onPress={imageUpload}>
                 <Image
                     style={styles.tinyLogo}
                     source={{
-                        uri: urlImage
+                        uri: urlFirebase.url
                     }}
                 />
             </TouchableOpacity>
             <View style={styles.blockName}>
-                <Text style={styles.colorText}>Ten dai dien</Text>
+                <Text style={styles.colorText}>Tên của bạn </Text>
                 <TextInput
                     placeholder="Name"
                     placeholderTextColor="green"
+                    value={urlFirebase.name}
                     style={[
                         styles.textInput,
                     ]}
                     autoCapitalize="none"
+                    onChangeText={onChangeName}
                 />
             </View>
 
@@ -106,7 +121,7 @@ const Profile = () => {
                                     color: '#fff',
                                 },
                             ]}>
-                            Update thong tin
+                            Sửa thông tin
                         </Text>
                     </LinearGradient>
                 </TouchableOpacity>
@@ -122,7 +137,8 @@ const styles = StyleSheet.create({
         flex: 1,
         alignItems: 'center',
         flexDirection: 'column',
-        marginTop: 200
+        marginTop: 150,
+        
 
     },
     tinyLogo: {

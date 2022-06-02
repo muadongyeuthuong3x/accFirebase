@@ -62,7 +62,9 @@ function TabBottom({ route, navigation}) {
         }}   
       />
   
-      <Tab.Screen name="setting" component={Profile} 
+      <Tab.Screen name="setting"
+       component={Profile} 
+       initialParams={{data:data}}
          options={{
           tabBarIcon: ({ focused }) => (
             <View style={styles.user}>

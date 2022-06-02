@@ -39,7 +39,6 @@ export default function App() {
         <Stack.Navigator screenOptions={{ headerShown: false }}>
 
           <Stack.Screen name="SignIn" component={SignInScreen} />
-
           <React.Fragment>
             <Stack.Screen name="ListUser" component={TabBottom} />
             <Stack.Screen name="ItemChat" component={ItemChat} />
