@@ -127,7 +127,7 @@ const ItemChat = ({ route, navigation }) => {
 
     React.useEffect(() => {
         const onChildAdd = database()
-            .ref('/messages/' + data.idRoom).limitToLast(5)
+            .ref('/messages/' + data.idRoom)
             .on('child_added', snapshot => {
                 setAllChat((state) => [snapshot.val(), ...state]);
             });
@@ -221,7 +221,9 @@ const ItemChat = ({ route, navigation }) => {
     }
 
 
-
+   const navigaetCallVideo = ()=>{
+    navigation.navigate('Video');
+   }
 
 
     return (
@@ -245,7 +247,7 @@ const ItemChat = ({ route, navigation }) => {
                 </View>
                 <View style={styles.callVideo}>
                     <FontAwesome name="phone" style={styles.arrowleft} size={20} />
-                    <Icon name="video" style={styles.arrowleft} size={20} />
+                    <Icon name="video" style={styles.arrowleft} size={20} onPress ={navigaetCallVideo}/>
                 </View>
             </View>
 

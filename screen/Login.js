@@ -11,79 +11,76 @@ import {
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import LinearGradient from 'react-native-linear-gradient';
 import auth from '@react-native-firebase/auth';
-import { signIn } from './../firebase/firebase'
 import database from '@react-native-firebase/database';
-import firestore from '@react-native-firebase/firestore';
-import SimpleToast from 'react-native-simple-toast';
-
 const SignInScreen = ({ navigation }) => {
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState('');
+    const [email, setEmail] = useState("tdhvu@gmail.com");
+    const [password, setPassword] = useState('123456');
     const [secure, setSecure] = useState(true);
 
 
-    const onClickPressLogin = () => {
-        auth()
-            .signInWithEmailAndPassword(email, password)
-            .then((res) => {
-                navigation.navigate('ListUser', {
-                    data: res.user
-                });
-            })
-            .catch(error => {
-                if (error.code === 'auth/email-already-in-use') {
-                    SimpleToast.show("Invalid Email Id!");
-                }
-
-                if (error.code === 'auth/invalid-email') {
-                    SimpleToast.show("Invalid Password Id!");
-                }
-
-                console.error(error);
-            });
-    }
-   
-    const updateSecureTextEntry = () => {
-        setSecure(!secure);
-      };
-
-    // const onClickPressLogin = async () => {
-    //     if (email == '' || password == '') {
-    //         Toast.show('Can nhap du email va password');
-    //         return false;
-    //     }
-
-    //     // create user
+    // const onClickPressLogin = () => {
+    //     console.log("login")
     //     auth()
-    //         .createUserWithEmailAndPassword(email, password)
+    //         .signInWithEmailAndPassword(email, password)
     //         .then((res) => {
-    //             const { email, uid } = res.user
-    //             const data = {
-    //                 email,
-    //                 uid,
-    //                 name: "Thu heo quay",
-    //                 word: "Tester",
-    //                 birday: "26/01/1999",
-    //                 avatar: "https://scontent.fhan5-9.fna.fbcdn.net/v/t39.30808-1/281596605_1018527299059547_2699710644885802828_n.jpg?stp=dst-jpg_p320x320&_nc_cat=109&ccb=1-7&_nc_sid=7206a8&_nc_ohc=eBQa_tqCEL0AX_0sYo9&_nc_ht=scontent.fhan5-9.fna&oh=00_AT8oPXZUYO7QtX7RvygRJZWcDKLcvmxG9145qSetpMdEKA&oe=628B2C9D"
-    //             }
-    //             database()
-    //                 .ref('/users/' + data.uid)
-    //                 .set(data)
-    //                 .then(() => console.log("tao oke"));
-    //             firestore().collection('users').add(data)
+    //             console.log("AAAA")
+    //             navigation.navigate('ListUser', {
+    //                 data: res.user
+    //             });
+
     //         })
     //         .catch(error => {
+    //             console.log("error")
     //             if (error.code === 'auth/email-already-in-use') {
-    //                 console.log('That email address is already in use!');
+    //                 SimpleToast.show("Invalid Email Id!");
     //             }
 
     //             if (error.code === 'auth/invalid-email') {
-    //                 console.log('That email address is invalid!');
+    //                 SimpleToast.show("Invalid Password Id!");
     //             }
 
     //             console.error(error);
     //         });
     // }
+   
+    const updateSecureTextEntry = () => {
+        setSecure(!secure);
+      };
+
+    const onClickPressLogin = async () => {
+        if (email == '' || password == '') {
+            Toast.show('Can nhap du email va password');
+            return false;
+        }
+      
+       await auth()
+            .createUserWithEmailAndPassword(email, password)
+            .then((res) => {
+                const { email, uid } = res.user
+                const data = {
+                    email,
+                    uid,
+                    name: "Thu heo quay",
+                    word: "Tester",
+                    birday: "26/01/1999",
+                    avatar: "https://scontent.fhan5-9.fna.fbcdn.net/v/t39.30808-1/281596605_1018527299059547_2699710644885802828_n.jpg?stp=dst-jpg_p320x320&_nc_cat=109&ccb=1-7&_nc_sid=7206a8&_nc_ohc=eBQa_tqCEL0AX_0sYo9&_nc_ht=scontent.fhan5-9.fna&oh=00_AT8oPXZUYO7QtX7RvygRJZWcDKLcvmxG9145qSetpMdEKA&oe=628B2C9D"
+                }
+            
+                database()
+                    .ref('/users/' + data.uid)
+                    .set(data)
+                    .then(() => console.log("tao oke"));
+                // firestore().collection('users').add(data)
+            })
+            .catch(error => {
+                if (error.code === 'auth/email-already-in-use') {
+                    console.log('That email address is already in use!');
+                }
+                if (error.code === 'auth/invalid-email') {
+                    console.log('That email address is invalid!');
+                }
+            });
+    }
 
     return (
         <View style={styles.container}>

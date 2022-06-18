@@ -26,7 +26,7 @@ if (!firebase.apps.length) {
     measurementId: "277423826521"
   })
 }
-// firebase.app().firestore()
+ firebase.app().firestore()
 
 
 
@@ -43,6 +43,7 @@ export default function App() {
             <Stack.Screen name="ListUser" component={TabBottom} />
             <Stack.Screen name="ItemChat" component={ItemChat} />
             <Stack.Screen name="Profile" component={Profile} />
+            <Stack.Screen name="Video" component={VideoCall} />
           </React.Fragment>
 
         </Stack.Navigator>
