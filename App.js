@@ -6,10 +6,6 @@ import SignInScreen from "./screen/Login"
 import TabBottom from "./navigate/tabBottom"
 import ItemChat from "./screen/ItemChat"
 import Profile from "./screen/Profile"
-import { Text } from 'react-native';
-import { onAuthStateChanged } from "@react-native-firebase/auth";
-import ContextWrapper from './context/ContextWrapper'
-import auth from '@react-native-firebase/auth';
 import firestore, { firebase } from '@react-native-firebase/firestore';
 import VideoCall from './screen/VideoCall';
 import '@react-native-firebase/firestore';
@@ -34,20 +30,18 @@ export default function App() {
 
   
   return (
-    <ContextWrapper>
       <NavigationContainer>
         <Stack.Navigator screenOptions={{ headerShown: false }}>
-
+        
           <Stack.Screen name="SignIn" component={SignInScreen} />
           <React.Fragment>
             <Stack.Screen name="ListUser" component={TabBottom} />
             <Stack.Screen name="ItemChat" component={ItemChat} />
             <Stack.Screen name="Profile" component={Profile} />
-            <Stack.Screen name="Video" component={VideoCall} />
+           <Stack.Screen name="Video" component={VideoCall} />
           </React.Fragment>
 
         </Stack.Navigator>
       </NavigationContainer>
-    </ContextWrapper>
   );
 }
