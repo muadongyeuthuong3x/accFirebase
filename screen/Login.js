@@ -18,69 +18,69 @@ const SignInScreen = ({ navigation }) => {
     const [secure, setSecure] = useState(true);
 
 
-    // const onClickPressLogin = () => {
-    //     console.log("login")
-    //     auth()
-    //         .signInWithEmailAndPassword(email, password)
-    //         .then((res) => {
-    //             console.log("AAAA")
-    //             navigation.navigate('ListUser', {
-    //                 data: res.user
-    //             });
+    const onClickPressLogin = () => {
+        console.log("login")
+        auth()
+            .signInWithEmailAndPassword(email, password)
+            .then((res) => {
+                console.log("AAAA")
+                navigation.navigate('ListUser', {
+                    data: res.user
+                });
 
-    //         })
-    //         .catch(error => {
-    //             console.log("error")
-    //             if (error.code === 'auth/email-already-in-use') {
-    //                 SimpleToast.show("Invalid Email Id!");
-    //             }
+            })
+            .catch(error => {
+                console.log("error")
+                if (error.code === 'auth/email-already-in-use') {
+                    SimpleToast.show("Invalid Email Id!");
+                }
 
-    //             if (error.code === 'auth/invalid-email') {
-    //                 SimpleToast.show("Invalid Password Id!");
-    //             }
+                if (error.code === 'auth/invalid-email') {
+                    SimpleToast.show("Invalid Password Id!");
+                }
 
-    //             console.error(error);
-    //         });
-    // }
+                console.error(error);
+            });
+    }
    
     const updateSecureTextEntry = () => {
         setSecure(!secure);
       };
 
-    const onClickPressLogin = async () => {
-        if (email == '' || password == '') {
-            Toast.show('Can nhap du email va password');
-            return false;
-        }
+    // const onClickPressLogin = async () => {
+    //     if (email == '' || password == '') {
+    //         Toast.show('Can nhap du email va password');
+    //         return false;
+    //     }
       
-       await auth()
-            .createUserWithEmailAndPassword(email, password)
-            .then((res) => {
-                const { email, uid } = res.user
-                const data = {
-                    email,
-                    uid,
-                    name: "Thu heo quay",
-                    word: "Tester",
-                    birday: "26/01/1999",
-                    avatar: "https://scontent.fhan5-9.fna.fbcdn.net/v/t39.30808-1/281596605_1018527299059547_2699710644885802828_n.jpg?stp=dst-jpg_p320x320&_nc_cat=109&ccb=1-7&_nc_sid=7206a8&_nc_ohc=eBQa_tqCEL0AX_0sYo9&_nc_ht=scontent.fhan5-9.fna&oh=00_AT8oPXZUYO7QtX7RvygRJZWcDKLcvmxG9145qSetpMdEKA&oe=628B2C9D"
-                }
+    //    await auth()
+    //         .createUserWithEmailAndPassword(email, password)
+    //         .then((res) => {
+    //             const { email, uid } = res.user
+    //             const data = {
+    //                 email,
+    //                 uid,
+    //                 name: "Thu heo quay",
+    //                 word: "Tester",
+    //                 birday: "26/01/1999",
+    //                 avatar: "https://scontent.fhan5-9.fna.fbcdn.net/v/t39.30808-1/281596605_1018527299059547_2699710644885802828_n.jpg?stp=dst-jpg_p320x320&_nc_cat=109&ccb=1-7&_nc_sid=7206a8&_nc_ohc=eBQa_tqCEL0AX_0sYo9&_nc_ht=scontent.fhan5-9.fna&oh=00_AT8oPXZUYO7QtX7RvygRJZWcDKLcvmxG9145qSetpMdEKA&oe=628B2C9D"
+    //             }
             
-                database()
-                    .ref('/users/' + data.uid)
-                    .set(data)
-                    .then(() => console.log("tao oke"));
-                // firestore().collection('users').add(data)
-            })
-            .catch(error => {
-                if (error.code === 'auth/email-already-in-use') {
-                    console.log('That email address is already in use!');
-                }
-                if (error.code === 'auth/invalid-email') {
-                    console.log('That email address is invalid!');
-                }
-            });
-    }
+    //             database()
+    //                 .ref('/users/' + data.uid)
+    //                 .set(data)
+    //                 .then(() => console.log("tao oke"));
+    //             // firestore().collection('users').add(data)
+    //         })
+    //         .catch(error => {
+    //             if (error.code === 'auth/email-already-in-use') {
+    //                 console.log('That email address is already in use!');
+    //             }
+    //             if (error.code === 'auth/invalid-email') {
+    //                 console.log('That email address is invalid!');
+    //             }
+    //         });
+    // }
 
     return (
         <View style={styles.container}>
