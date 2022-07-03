@@ -33,18 +33,28 @@ const ListUser = ({ route, navigation }) => {
       .ref('users/')
       .once('value')
       .then(snapshot => {
-        console.log(snapshot.val())
         setlistUser(
           Object.values(snapshot.val()).filter(it => it.uid != data.uid),
         );
       });
-
   };
+  const getUserInformation = async ()=>{
+    database()
+    .ref(`users/${data.uid}`)
+    .once('value')
+    .then(snapshot => {
+      
+      setYou(
+        Object.values(snapshot.val())
+      );
+    });
+  }
+  console.log("AAAAA")
+  console.log(you[1])
   useEffect(() => {
     getAllUser()
-
+    getUserInformation()
   }, []);
-  
   const getInformationView = (uid) =>{
     setModalVisible(!modalVisible)
     database()
@@ -94,15 +104,18 @@ const ListUser = ({ route, navigation }) => {
           const dataSend = {
             idYou: data?.uid,
             idFriend: uid,
-            idRoom: roomId
+            idRoom: roomId,
+            avatar: you[1]
           }
-          navigation.navigate('ItemChat', dataSend);
+          console.log(you[1])
+          navigation.navigate('ItemChat', dataSend);// no chay xuong day chua
         } else {
           const dataRes = snapshot.val()
           const dataSend = {
             idYou: dataRes.idInformationYou,
             idFriend: dataRes.idInformationFriend,
-            idRoom: dataRes.roomId
+            idRoom: dataRes.roomId,
+            avatar: you[1]
           }
           navigation.navigate('ItemChat', dataSend);
         }

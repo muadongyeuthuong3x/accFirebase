@@ -9,37 +9,32 @@ import {
     StatusBar,
 } from 'react-native';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import { useSelector, useDispatch } from 'react-redux';
 import LinearGradient from 'react-native-linear-gradient';
+import AsyncStorage from '@react-native-async-storage/async-storage'
 import auth from '@react-native-firebase/auth';
-import database from '@react-native-firebase/database';
+import {idLogin} from './../tookit/loginSlice'
 const SignInScreen = ({ navigation }) => {
-    const [email, setEmail] = useState("tdhvu@gmail.com");
+    const [email, setEmail] = useState("cuong@gmail.com");
     const [password, setPassword] = useState('123456');
     const [secure, setSecure] = useState(true);
-
-
-    const onClickPressLogin = () => {
-        console.log("login")
+    const onClickPressLogin = async() => {
         auth()
             .signInWithEmailAndPassword(email, password)
             .then((res) => {
-                console.log("AAAA")
                 navigation.navigate('ListUser', {
                     data: res.user
                 });
-
+                 AsyncStorage.setItem("idUser",res.user.uid)
             })
             .catch(error => {
                 console.log("error")
                 if (error.code === 'auth/email-already-in-use') {
                     SimpleToast.show("Invalid Email Id!");
                 }
-
                 if (error.code === 'auth/invalid-email') {
                     SimpleToast.show("Invalid Password Id!");
                 }
-
-                console.error(error);
             });
     }
    

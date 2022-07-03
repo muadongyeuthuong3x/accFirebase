@@ -35,7 +35,6 @@ const ItemChat = ({ route, navigation }) => {
 
     const data = route.params;
     console.log(data)
-    const {idInformationFriend ,roomId } = data
     const [message, setMessage] = React.useState('');
     const [allChat, setAllChat] = React.useState('');
     const [urlBe, setUrlBE] = React.useState('');
@@ -69,7 +68,7 @@ const ItemChat = ({ route, navigation }) => {
                         <Image
                             style={styles.imgChat}
                             source={{
-                                uri: informationUserm.avatar
+                                uri: informationUserm?.avatar
                             }}
                         />{
                             item.msgType === 'text' ?
@@ -313,7 +312,10 @@ const ItemChat = ({ route, navigation }) => {
             })
         });
     }
-
+    
+    React.useEffect(()=>{
+        join()
+    },[])
 
     const join = async () => {
         setGettingCall(false)
@@ -410,24 +412,36 @@ const ItemChat = ({ route, navigation }) => {
                 }
             }
 
-            cRef.set(cWithOffer)
+            const inforMationCall = {
+                imageYou : data.avatar,
+                idRoom : data.idRoom,
+                idFriend : data.idFriend,
+                idYou: data.idYou
+            }
+
+            cRef.set(cWithOffer);
+            database()
+            .ref(`roomId/${data?.idFriend}`)
+                .update(inforMationCall)
+                .then(() => console.log('Data updated.'));
+
         }
 
     }
 
 
-    if (gettingCall === true) {
-        return <View style={styles.grButton}>
-            <View style={styles.butonEndCall1}>
-                <FontAwesome name="phone" style={styles.iconEndCall1} size={20} onPress={hangup} />
-            </View>
-            <View>
-            </View>
-            <View style={styles.buttonCall}>
-                <FontAwesome name="phone" style={styles.iconJoinCall1} size={20} onPress={join} />
-            </View>
-        </View>
-    }
+    // if (gettingCall === true) {
+    //     return <View style={styles.grButton}>
+    //         <View style={styles.butonEndCall1}>
+    //             <FontAwesome name="phone" style={styles.iconEndCall1} size={20} onPress={hangup} />
+    //         </View>
+    //         <View>
+    //         </View>
+    //         <View style={styles.buttonCall}>
+    //             <FontAwesome name="phone" style={styles.iconJoinCall1} size={20} onPress={join} />
+    //         </View>
+    //     </View>
+    // }
 
     if (localStream && !remoteStream) {
         return (

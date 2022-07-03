@@ -10,7 +10,7 @@
     "lint": "eslint ."
   },
   "dependencies": {
-    "@react-native-async-storage/async-storage": "^1.17.5",
+    "@react-native-async-storage/async-storage": "^1.17.7",
     "@react-native-community/masked-view": "^0.1.11",
     "@react-native-firebase/analytics": "^14.9.4",
     "@react-native-firebase/app": "^14.9.4",
@@ -22,6 +22,7 @@
     "@react-navigation/native": "^6.0.10",
     "@react-navigation/native-stack": "^6.6.2",
     "@react-navigation/stack": "^6.2.1",
+    "@reduxjs/toolkit": "^1.8.3",
     "lodash": "^4.17.21",
     "moment": "^2.29.3",
     "react": "17.0.2",
@@ -41,7 +42,9 @@
     "react-native-toast-message": "^2.1.5",
     "react-native-uuid": "^2.0.1",
     "react-native-vector-icons": "^9.1.0",
-    "react-native-webrtc": "^1.100.1"
+    "react-native-webrtc": "^1.100.1",
+    "react-redux": "^8.0.2",
+    "redux": "^4.2.0"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9",

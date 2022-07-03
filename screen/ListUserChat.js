@@ -17,6 +17,7 @@ import React, { useEffect, useState } from 'react';
 const ListUserChat = ({ route,  navigation }) => {
   const data = route.params.data;
   const [search, setSearch] = React.useState();
+  const [you, setYou] = React.useState('');
   const [chatList  , setchatList] = useState('')
   const getChatList = async ()=>{
       database()
@@ -27,16 +28,31 @@ const ListUserChat = ({ route,  navigation }) => {
     }
   });
   }
+
+  const getUserInformation = async ()=>{
+    database()
+    .ref(`users/${data.uid}`)
+    .once('value')
+    .then(snapshot => {
+      setYou(
+        Object.values(snapshot.val())
+      );
+    });
+  }
+
   useEffect(()=>{
    getChatList()
+   getUserInformation()
   },[]);
   const navigateItemChat = (itemChat)=>{
     const dataSend = {
       idYou:data?.uid,
       idFriend: itemChat.idInformationFriend,
-      idRoom:itemChat.roomId
+      idRoom:itemChat.roomId,
+      avatar: you[1]
     }
-   navigation.navigate('ItemChat' ,dataSend);
+    console.log(dataSend)
+    navigation.navigate('ItemChat' ,dataSend);
   }
  
 
