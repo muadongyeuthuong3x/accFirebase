@@ -23,7 +23,7 @@ const VideoCall = () => {
         const localStream = await navigator.mediaDevices.getUserMedia({
             video: true,
             audio: true,
-        });
+        });   
         localStream.getTracks().forEach((track) => {
             pc.addTrack(track, localStream);
         });
